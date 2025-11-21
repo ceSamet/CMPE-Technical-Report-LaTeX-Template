@@ -3,31 +3,36 @@
 % --- BASIC PACKAGES ---
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage[turkish,english]{babel} % Language support
-\usepackage{csquotes} % Recommended for biblatex
-\usepackage{lipsum}   % Generates dummy text (lorem ipsum)
+\usepackage[turkish,english]{babel}
+\usepackage{csquotes}
+\usepackage{lipsum}
 
 % --- FONT SETTINGS ---
-% Using 'newtx' for Times New Roman style (text and math)
 \usepackage{newtxtext}
 \usepackage{newtxmath}
 
 % --- PAGE LAYOUT & MARGINS ---
-% Template rules: Left: 3cm, Right: 2cm, Top: 3cm, Bottom: 2cm
 \usepackage[left=3cm, right=2cm, top=3cm, bottom=2cm, headheight=15pt]{geometry}
 
 % --- LINE SPACING & PARAGRAPH ---
 \usepackage{setspace}
-\onehalfspacing % 1.5 line spacing (Template rule)
+\onehalfspacing
 
-\usepackage{indentfirst} % Indent the first paragraph of sections
-\setlength{\parindent}{1cm} % 1cm indentation
-\setlength{\parskip}{0pt}   % No extra space between paragraphs
+\usepackage{indentfirst}
+\setlength{\parindent}{1cm}
+\setlength{\parskip}{0pt}
+
+% --- WIDOW AND ORPHAN CONTROL ---
+\widowpenalty=10000
+\clubpenalty=10000
+
+% --- LIST SETTINGS ---
+\usepackage{enumitem}
+\setlist{nosep}
 
 % --- SECTION HEADINGS (Titlesec) ---
 \usepackage{titlesec}
 
-% 1. Section (Level 1): 14pt, Bold, Centered, Uppercase, New Page
 \titleformat{\section}
   {\clearpage\centering\bfseries\fontsize{14}{16}\selectfont} 
   {\thesection} 
@@ -35,7 +40,6 @@
   {\MakeUppercase} 
   [\vspace{12pt}] 
 
-% 2. Subsection (Level 2): 12pt, Bold, Left Aligned
 \titleformat{\subsection}
   {\bfseries\fontsize{12}{14}\selectfont}
   {\thesubsection}
@@ -43,7 +47,6 @@
   {}
   [\vspace{6pt}]
 
-% 3. Subsubsection (Level 3): 12pt, Bold (assumed based on common practice), Left Aligned
 \titleformat{\subsubsection}
   {\bfseries\fontsize{12}{14}\selectfont} 
   {\thesubsubsection}
@@ -51,7 +54,6 @@
   {}
   [\vspace{0pt}]
 
-% Spacing around headings
 \titlespacing*{\section}{0pt}{0pt}{12pt}
 \titlespacing*{\subsection}{0pt}{12pt}{6pt}
 \titlespacing*{\subsubsection}{0pt}{12pt}{0pt}
@@ -59,37 +61,71 @@
 % --- HEADER & FOOTER ---
 \usepackage{fancyhdr}
 \pagestyle{fancy}
-\fancyhf{} % Clear all fields
-\fancyhead[R]{\thepage} % Page number at top right
-\renewcommand{\headrulewidth}{0pt} % No header line
+\fancyhf{}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{}
+\renewcommand{\headrulewidth}{0pt}
+
+% --- FOOTNOTE SETTINGS ---
+\usepackage{footmisc}
+
+\renewcommand{\footnoterule}{%
+    \vspace{1em}%
+    \noindent\rule{5cm}{0.4pt}%
+    \vspace{1em}%
+}
+
+\renewcommand{\footnotesize}{\fontsize{10}{12}\selectfont}
 
 % --- BIBLIOGRAPHY (IEEE Style) ---
 \usepackage[backend=biber, style=ieee, sorting=none]{biblatex}
-\addbibresource{references.bib} % Pointing to your .bib file
+
+% IEEE style için volume+number macro düzeltmesi
+\renewbibmacro*{volume+number+eid}{%
+  \printfield{volume}%
+  \setunit*{\addnbspace}%
+  \printfield{number}%
+  \setunit{\addcomma\space}%
+  \printfield{eid}}
+
+\addbibresource{references.bib}
 
 % --- FIGURES & TABLES ---
-\usepackage{graphicx} % For images
-\usepackage{caption}  % For caption formatting
-\usepackage{float}    % For [H] placement
-\usepackage{booktabs} % For professional looking tables (toprule, midrule)
-\usepackage{multirow} % For merging rows in tables
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage{mathtools}
 
-% Rename captions if using English (Explicitly ensuring formats)
+% --- NUMBERING WITHIN SECTIONS ---
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
+
+% --- CUSTOM FLOAT FOR ALGORITHMS ---
+\newfloat{algorithm}{htbp}{loa}
+\floatname{algorithm}{Algorithm}
+\numberwithin{algorithm}{section}
+
+% Rename captions
 \addto\captionsenglish{
   \renewcommand{\contentsname}{\hfill TABLE OF CONTENTS \hfill}
   \renewcommand{\figurename}{Figure}
   \renewcommand{\tablename}{Table}
 }
 
-% Caption positioning and spacing
 \captionsetup[table]{skip=10pt, position=top}
 \captionsetup[figure]{skip=10pt, position=bottom}
 
 % --- TOC SETTINGS ---
 \usepackage{tocloft}
-\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}} % Dots for sections in TOC
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
 \renewcommand{\cftsecfont}{\normalfont} 
 \renewcommand{\cftsecpagefont}{\normalfont}
+\renewcommand{\cftdotsep}{1}
+\setlength{\cftbeforesecskip}{0pt}
 
 
 \begin{document}
@@ -154,20 +190,20 @@
 % ==========================================
 
 \section{INTRODUCTION}
-The objective of this project is to analyze the behavior of well-known ports in a Wide Area Network (WAN). Understanding port usage is critical for network security and traffic management. As stated in the project guidelines \cite{source1}, we focus on ten distinct ports.
+\label{sec:introduction}
+The objective of this project is to analyze the behavior of well-known ports in a Wide Area Network (WAN). Understanding port usage is critical for network security and traffic management. As stated in the project guidelines \cite{source1}, we focus on ten distinct ports.\footnote{This footnote demonstrates the custom footnote formatting with adjusted spacing and rule.}
 
 Network communication relies heavily on the Transport Layer protocols, specifically TCP and UDP. The fundamental theory of communication was established years ago \cite{shannon1948}, but modern applications require more complex handling as discussed in recent studies \cite{lecun2015}.
 
 \section{METHODOLOGY}
+\label{sec:methodology}
 
 \subsection{Experimental Setup}
 We set up a client-server architecture to test port accessibility. The detailed topology is illustrated in Figure \ref{fig:topology}. We used packet sniffing tools to capture the traffic data.
 
-% Example of a Figure
 \begin{figure}[H]
     \centering
-    % \includegraphics[width=0.8\textwidth]{topology.png} % UNCOMMENT THIS LINE AND USE YOUR IMAGE
-    \includegraphics[width=0.6\textwidth]{example-image} % Placeholder image
+    \includegraphics[width=0.6\textwidth]{example-image}
     \caption{Network topology used for port scanning}
     \label{fig:topology}
 \end{figure}
@@ -177,7 +213,6 @@ As seen in Figure \ref{fig:topology}, the client connects through a firewall. Th
 \subsection{Mathematical Model}
 To calculate the round-trip time (RTT), we used the standard formula. Equation \ref{eq:rtt} shows the calculation for the estimated RTT:
 
-% Example of an Equation
 \begin{equation}
     RTT_{new} = (1 - \alpha) \cdot RTT_{old} + \alpha \cdot RTT_{sample}
     \label{eq:rtt}
@@ -185,12 +220,37 @@ To calculate the round-trip time (RTT), we used the standard formula. Equation \
 
 where $\alpha$ is the weighting factor. We referenced Equation \ref{eq:rtt} throughout our analysis to determine network latency.
 
+\begin{equation}
+    \text{Throughput} = \frac{\text{Data Size}}{\text{Transfer Time}}
+    \label{eq:throughput}
+\end{equation}
+
+\subsection{List Examples}
+The following items were considered in our experimental design:
+
+\begin{itemize}
+    \item Network topology configuration
+    \item Firewall rule definitions
+    \item Packet capture methodology
+    \item Data analysis procedures
+\end{itemize}
+
+Enumerated steps for the experiment:
+
+\begin{enumerate}
+    \item Configure the test environment
+    \item Deploy monitoring tools
+    \item Execute port scanning procedures
+    \item Analyze collected data
+    \item Generate final report
+\end{enumerate}
+
 \section{MAIN FINDINGS}
+\label{sec:findings}
 
 \subsection{Port Analysis Results}
 The results of our scan are summarized below. We compared TCP and UDP performance across different services.
 
-% Example of a Professional Table (using booktabs)
 \begin{table}[htbp]
     \centering
     \caption{Status of well-known ports during the WAN scan}
@@ -214,14 +274,37 @@ Table \ref{tab:ports} clearly indicates that secure ports (like 22 and 443) were
 \subsubsection{Detailed Comparison}
 Comparing the data from Table \ref{tab:ports} with the theoretical values in \cite{shannon1948}, we observe a significant deviation in UDP packet loss.
 
+\subsection{Algorithm Example}
+The scanning algorithm used in this project is presented below:
+
+\begin{algorithm}[H]
+\caption{Port Scanning Algorithm}
+\label{alg:portscan}
+\begin{verbatim}
+FOR each port in target_port_list DO
+    SEND TCP SYN packet to target_host:port
+    WAIT for response with timeout
+    IF SYN-ACK received THEN
+        Mark port as OPEN
+    ELSE IF RST received THEN
+        Mark port as CLOSED
+    ELSE
+        Mark port as FILTERED
+    END IF
+END FOR
+\end{verbatim}
+\end{algorithm}
+
+Algorithm \ref{alg:portscan} demonstrates the basic port scanning methodology employed in Section \ref{sec:methodology}.
+
 \section{CONCLUSIONS}
+\label{sec:conclusions}
 In this project, we successfully analyzed ten well-known ports. The results show that firewall rules significantly impact the visibility of UDP ports compared to TCP. Future work should focus on IPv6 compatibility.
 
 % ==========================================
 % REFERENCES
 % ==========================================
 \newpage
-% Print bibliography and add it to TOC
 \printbibliography[heading=bibintoc, title={REFERENCES}]
 
 % ==========================================
@@ -230,14 +313,31 @@ In this project, we successfully analyzed ten well-known ports. The results show
 \newpage
 \appendix
 
-% --- BU KOMUTU EKLE (ÇAKIŞMAYI BU DÜZELTİR) ---
-% İçindekiler tablosundaki numara genişliğini 8 birime çıkarır.
 \addtocontents{toc}{\protect\setlength{\cftsecnumwidth}{8em}} 
-% -----------------------------------------------
 
 \renewcommand{\thesection}{APPENDIX \Alph{section}:} 
 
 \section{ADDITIONAL DATA}
+\label{app:data}
 This appendix contains raw data logs captured during the experiment.
+
+\begin{table}[H]
+    \centering
+    \caption{Raw packet capture statistics}
+    \label{tab:rawdata}
+    \begin{tabular}{lcc}
+    \toprule
+    \textbf{Metric} & \textbf{TCP} & \textbf{UDP} \\ 
+    \midrule
+    Total Packets & 15,432 & 8,921 \\
+    Dropped Packets & 23 & 156 \\
+    Average Latency (ms) & 45.2 & 52.7 \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\section{CONFIGURATION FILES}
+\label{app:config}
+This appendix includes sample configuration files used during the experiment.
 
 \end{document}
