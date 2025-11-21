@@ -1,0 +1,243 @@
+\documentclass[12pt, a4paper]{article}
+
+% --- BASIC PACKAGES ---
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[turkish,english]{babel} % Language support
+\usepackage{csquotes} % Recommended for biblatex
+\usepackage{lipsum}   % Generates dummy text (lorem ipsum)
+
+% --- FONT SETTINGS ---
+% Using 'newtx' for Times New Roman style (text and math)
+\usepackage{newtxtext}
+\usepackage{newtxmath}
+
+% --- PAGE LAYOUT & MARGINS ---
+% Template rules: Left: 3cm, Right: 2cm, Top: 3cm, Bottom: 2cm
+\usepackage[left=3cm, right=2cm, top=3cm, bottom=2cm, headheight=15pt]{geometry}
+
+% --- LINE SPACING & PARAGRAPH ---
+\usepackage{setspace}
+\onehalfspacing % 1.5 line spacing (Template rule)
+
+\usepackage{indentfirst} % Indent the first paragraph of sections
+\setlength{\parindent}{1cm} % 1cm indentation
+\setlength{\parskip}{0pt}   % No extra space between paragraphs
+
+% --- SECTION HEADINGS (Titlesec) ---
+\usepackage{titlesec}
+
+% 1. Section (Level 1): 14pt, Bold, Centered, Uppercase, New Page
+\titleformat{\section}
+  {\clearpage\centering\bfseries\fontsize{14}{16}\selectfont} 
+  {\thesection} 
+  {1em} 
+  {\MakeUppercase} 
+  [\vspace{12pt}] 
+
+% 2. Subsection (Level 2): 12pt, Bold, Left Aligned
+\titleformat{\subsection}
+  {\bfseries\fontsize{12}{14}\selectfont}
+  {\thesubsection}
+  {1em}
+  {}
+  [\vspace{6pt}]
+
+% 3. Subsubsection (Level 3): 12pt, Bold (assumed based on common practice), Left Aligned
+\titleformat{\subsubsection}
+  {\bfseries\fontsize{12}{14}\selectfont} 
+  {\thesubsubsection}
+  {1em}
+  {}
+  [\vspace{0pt}]
+
+% Spacing around headings
+\titlespacing*{\section}{0pt}{0pt}{12pt}
+\titlespacing*{\subsection}{0pt}{12pt}{6pt}
+\titlespacing*{\subsubsection}{0pt}{12pt}{0pt}
+
+% --- HEADER & FOOTER ---
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{} % Clear all fields
+\fancyhead[R]{\thepage} % Page number at top right
+\renewcommand{\headrulewidth}{0pt} % No header line
+
+% --- BIBLIOGRAPHY (IEEE Style) ---
+\usepackage[backend=biber, style=ieee, sorting=none]{biblatex}
+\addbibresource{references.bib} % Pointing to your .bib file
+
+% --- FIGURES & TABLES ---
+\usepackage{graphicx} % For images
+\usepackage{caption}  % For caption formatting
+\usepackage{float}    % For [H] placement
+\usepackage{booktabs} % For professional looking tables (toprule, midrule)
+\usepackage{multirow} % For merging rows in tables
+
+% Rename captions if using English (Explicitly ensuring formats)
+\addto\captionsenglish{
+  \renewcommand{\contentsname}{\hfill TABLE OF CONTENTS \hfill}
+  \renewcommand{\figurename}{Figure}
+  \renewcommand{\tablename}{Table}
+}
+
+% Caption positioning and spacing
+\captionsetup[table]{skip=10pt, position=top}
+\captionsetup[figure]{skip=10pt, position=bottom}
+
+% --- TOC SETTINGS ---
+\usepackage{tocloft}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}} % Dots for sections in TOC
+\renewcommand{\cftsecfont}{\normalfont} 
+\renewcommand{\cftsecpagefont}{\normalfont}
+
+
+\begin{document}
+\shorthandoff{=}
+
+% ==========================================
+% TITLE PAGE
+% ==========================================
+\begin{titlepage}
+    \centering
+    \vspace*{1cm}
+    
+    {\bfseries\fontsize{14}{16}\selectfont CMPE351 COMPUTER NETWORKS\\}
+    \vspace{12pt}
+    {\bfseries\fontsize{14}{16}\selectfont PROJECT REPORT\\}
+    \vspace{12pt}
+    {\bfseries\fontsize{14}{16}\selectfont Course Project \#1\\}
+    
+    \vspace{3cm}
+    
+    {\bfseries\fontsize{16}{18}\selectfont Usage of Ten Different Well-known Ports over TCP and/or UDP in WAN\\}
+    
+    \vspace{3cm}
+    
+    \textbf{Submitted by:}\\
+    \vspace{12pt}
+    Cengiz Demirtaş (CMPE)\\
+    İlker Çetin (CMPE)\\
+    Mustafa Ünel (CMPE)
+    
+    \vspace{2cm}
+    
+    \textbf{Project Supervisor:}\\
+    Asst. Prof. Dr. İlktan Ar
+    
+    \vspace{1cm}
+    
+    \textbf{Project Mentors:}\\
+    Sena Kılınç\\
+    Tuna Zeyneloğlu
+    
+    \vfill
+    
+    Faculty of Engineering and Natural Sciences\\
+    Kadir Has University\\
+    November 2025
+    
+\end{titlepage}
+
+% ==========================================
+% FRONT MATTER
+% ==========================================
+\pagenumbering{arabic} 
+\setcounter{page}{2} 
+
+\tableofcontents
+\thispagestyle{empty} 
+\newpage
+
+% ==========================================
+% MAIN CONTENT
+% ==========================================
+
+\section{INTRODUCTION}
+The objective of this project is to analyze the behavior of well-known ports in a Wide Area Network (WAN). Understanding port usage is critical for network security and traffic management. As stated in the project guidelines \cite{source1}, we focus on ten distinct ports.
+
+Network communication relies heavily on the Transport Layer protocols, specifically TCP and UDP. The fundamental theory of communication was established years ago \cite{shannon1948}, but modern applications require more complex handling as discussed in recent studies \cite{lecun2015}.
+
+\section{METHODOLOGY}
+
+\subsection{Experimental Setup}
+We set up a client-server architecture to test port accessibility. The detailed topology is illustrated in Figure \ref{fig:topology}. We used packet sniffing tools to capture the traffic data.
+
+% Example of a Figure
+\begin{figure}[H]
+    \centering
+    % \includegraphics[width=0.8\textwidth]{topology.png} % UNCOMMENT THIS LINE AND USE YOUR IMAGE
+    \includegraphics[width=0.6\textwidth]{example-image} % Placeholder image
+    \caption{Network topology used for port scanning}
+    \label{fig:topology}
+\end{figure}
+
+As seen in Figure \ref{fig:topology}, the client connects through a firewall. The configuration ensures that only specific packets are allowed.
+
+\subsection{Mathematical Model}
+To calculate the round-trip time (RTT), we used the standard formula. Equation \ref{eq:rtt} shows the calculation for the estimated RTT:
+
+% Example of an Equation
+\begin{equation}
+    RTT_{new} = (1 - \alpha) \cdot RTT_{old} + \alpha \cdot RTT_{sample}
+    \label{eq:rtt}
+\end{equation}
+
+where $\alpha$ is the weighting factor. We referenced Equation \ref{eq:rtt} throughout our analysis to determine network latency.
+
+\section{MAIN FINDINGS}
+
+\subsection{Port Analysis Results}
+The results of our scan are summarized below. We compared TCP and UDP performance across different services.
+
+% Example of a Professional Table (using booktabs)
+\begin{table}[htbp]
+    \centering
+    \caption{Status of well-known ports during the WAN scan}
+    \label{tab:ports}
+    \begin{tabular}{llcl}
+    \toprule
+    \textbf{Port} & \textbf{Service} & \textbf{Protocol} & \textbf{Status} \\ 
+    \midrule
+    20 & FTP Data   & TCP & Closed \\
+    21 & FTP Control& TCP & Open \\
+    22 & SSH        & TCP & Open \\
+    53 & DNS        & UDP & Filtered \\
+    80 & HTTP       & TCP & Open \\
+    443& HTTPS      & TCP & Open \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+Table \ref{tab:ports} clearly indicates that secure ports (like 22 and 443) were left open for administration and web services, while legacy ports like 20 were closed.
+
+\subsubsection{Detailed Comparison}
+Comparing the data from Table \ref{tab:ports} with the theoretical values in \cite{shannon1948}, we observe a significant deviation in UDP packet loss.
+
+\section{CONCLUSIONS}
+In this project, we successfully analyzed ten well-known ports. The results show that firewall rules significantly impact the visibility of UDP ports compared to TCP. Future work should focus on IPv6 compatibility.
+
+% ==========================================
+% REFERENCES
+% ==========================================
+\newpage
+% Print bibliography and add it to TOC
+\printbibliography[heading=bibintoc, title={REFERENCES}]
+
+% ==========================================
+% APPENDICES
+% ==========================================
+\newpage
+\appendix
+
+% --- BU KOMUTU EKLE (ÇAKIŞMAYI BU DÜZELTİR) ---
+% İçindekiler tablosundaki numara genişliğini 8 birime çıkarır.
+\addtocontents{toc}{\protect\setlength{\cftsecnumwidth}{8em}} 
+% -----------------------------------------------
+
+\renewcommand{\thesection}{APPENDIX \Alph{section}:} 
+
+\section{ADDITIONAL DATA}
+This appendix contains raw data logs captured during the experiment.
+
+\end{document}
